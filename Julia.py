@@ -10,21 +10,22 @@ pygame.init()
 window = pygame.display.set_mode((600, 600))
 
 #draw a line - see http://www.pygame.org/docs/ref/draw.html for more                                                                                                                                      
-
+CONSTANT = .285
+#IMAGINARY = .1
 def Julia(i,j):
-    i = (i/150.0) - 2.0
-    j = (j/150.0) - 2.0    
+    i = (i - 250.0) * .005
+    j = (j - 250.0) * .005
     newi = i 
     newj = j 
     
-    for x in range (1,20):
-        newi = i**2 - j**2 + 1
-        newj = 2 * i * j
+    for x in range (1,100):
+        newi = i**2 - j**2 + CONSTANT
+        newj = 2 * i * j #+ IMAGINARY
         i = newi
         j = newj
-        if newi**2 + newj**2 > 200:
+        if newi**2 + newj**2 > 100:
             return x
-    return 20
+    return 100
 
 
   
@@ -38,12 +39,13 @@ while True:
    for i in range (0,600):
         for j in range (0,600):
             jul = Julia(i,j)
-            if Julia(i,j) > 20:
-                pygame.draw.rect(window, (jul * 10, 2, 2), (i, j, 1, 1), 1)
-                #print i, j
+            if jul > 20:
+               # print jul
+                pygame.draw.rect(window, (100, 100, (255-int(jul*2.5))), (i, j, 1, 1), 1)
             else:
-                pygame.draw.rect(window, (jul * 10, 2, 133), (i, j, 1, 1), 1)
-                #print i, j
+                #print jul
+                pygame.draw.rect(window, ((255-int(jul*2.5)), 0, 250), (i, j, 1, 1), 1)
+                
 
    #window.fill((0,0,0))
    pygame.display.flip()
